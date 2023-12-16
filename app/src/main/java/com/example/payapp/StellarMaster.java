@@ -53,9 +53,6 @@ public class StellarMaster {
             System.out.println("Error");
         }
 
-        // Create trust.
-        createTrust(keyPair.getSecretSeed());
-
         // Log wallet
         try {
             // Create a KeyPair object for the specified wallet address
@@ -92,6 +89,9 @@ public class StellarMaster {
         Log.d(TAG, "createUser: Secret");
         newUser.password = password;
         Log.d(TAG, "createUser: Password");
+
+        // Create trust.
+        createTrust(keyPair.getSecretSeed(), newUser.name);
 
         return newUser;
     }
@@ -146,7 +146,7 @@ public class StellarMaster {
         }
     }
 
-    public void createTrust(char[] secretWalletId){
+    public void createTrust(char[] secretWalletId, String username){
         try {
             Server server = new Server(serverUrl);
 
@@ -169,7 +169,7 @@ public class StellarMaster {
             Transaction allowAstroDollars = new Transaction.Builder(receiving, Network.TESTNET)
                     .addOperation(changeTrustOperation)
                     .setTimeout(180)
-                    .addMemo(Memo.text("Setting trust from distro"))
+                    .addMemo(Memo.text("User: " + username))
                     .setBaseFee(Transaction.MIN_BASE_FEE)
                     .build();
             allowAstroDollars.sign(destination);

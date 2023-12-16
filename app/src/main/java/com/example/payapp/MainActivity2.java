@@ -78,7 +78,7 @@ public class MainActivity2 extends AppCompatActivity{
             AccountResponse account = server.accounts().account(keyPair.getAccountId());
 
             // Log account details
-            Log.d("Bastian", "Account ID: " + account.getAccountId());
+            Log.d("Bastian", "Account ID: " + account.getAccountId() + " " + user.private_seed);
             Log.d("Bastian", "Balances:");
 
             for (AccountResponse.Balance balance : account.getBalances()) {
